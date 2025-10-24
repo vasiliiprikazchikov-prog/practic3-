@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+
+int fibonacciSearch(int arr[], int n, int target) {
+    // Инициализация чисел Фибоначчи
+    int fibMMm2 = 0; // F(m-2)
+    int fibMMm1 = 1; // F(m-1)
+    int fibM = fibMMm2 + fibMMm1; // F(m)
+    
+    // Находим наименьшее число Фибоначчи >= n
+    while (fibM < n) {
+        fibMMm2 = fibMMm1;
+        fibMMm1 = fibM;
+        fibM = fibMMm2 + fibMMm1;
+    }
+    
+    int offset = -1;
+    
+    while (fibM > 1) {
+        // Проверяем элемент на позиции i
+        int i = min(offset + fibMMm2, n - 1);
+        
+        if (arr[i] < target) {
+            fibM = fibMMm1;
+            fibMMm1 = fibMMm2;
+            fibMMm2 = fibM - fibMMm1;
+            offset = i;
+        }
+        else if (arr[i] > target) {
+            fibM = fibMMm2;
+            fibMMm1 = fibMMm1 - fibMMm2;
+            fibMMm2 = fibM - fibMMm1;
+        }
+        else {
+            return i; // Элемент найден
+        }
+    }
+    
+    // Проверка последнего элемента
+    if (fibMMm1 && arr[offset + 1] == target)
+        return offset + 1;
+        
+    return -1; // Элемент не найден
+}
+
+int main() {
+    int arr[] = {2, 5, 8, 12, 16, 23, 38, 45, 67, 89, 100};
+    int target = 45;
+    int size = sizeof(arr) / sizeof(arr[0]);
+    
+    int result = fibonacciSearch(arr, size, target);
+    
+    if (result != -1) {
+        cout << "Элемент " << target << " найден на позиции " << result << endl;
+    } else {
+        cout << "Элемент " << target << " не найден" << endl;
+    }
+    
+    return 0;
+}
+
+
+Элемент 45 найден на позиции 7
