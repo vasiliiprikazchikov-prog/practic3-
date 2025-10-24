@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+int binarySearch(int arr[], int left, int right, int target) {
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        
+        if (arr[mid] == target)
+            return mid; // Элемент найден
+            
+        if (arr[mid] < target)
+            left = mid + 1; // Ищем в правой половине
+        else
+            right = mid - 1; // Ищем в левой половине
+    }
+    return -1; // Элемент не найден
+}
+
+int main() {
+    int sortedArray[] = {2, 5, 8, 12, 16, 23, 38, 45, 67};
+    int target = 23;
+    int size = sizeof(sortedArray) / sizeof(sortedArray[0]);
+    
+    int result = binarySearch(sortedArray, 0, size - 1, target);
+    
+    if (result != -1) {
+        cout << "Элемент " << target << " найден на позиции " << result << endl;
+    } else {
+        cout << "Элемент " << target << " не найден" << endl;
+    }
+    
+    return 0;
+}
+
+Элемент 23 найден на позиции 5
