@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+void shellSort(int arr[], int n) {
+    // Начинаем с большого шага, уменьшаем вдвое на каждой итерации
+    for (int gap = n / 2; gap > 0; gap /= 2) {
+        // Применяем сортировку вставками для этого шага
+        for (int i = gap; i < n; i++) {
+            int temp = arr[i];
+            int j;
+            
+            // Сдвигаем элементы, пока не найдем правильную позицию
+            for (j = i; j >= gap && arr[j - gap] > temp; j -= gap) {
+                arr[j] = arr[j - gap];
+            }
+            arr[j] = temp;
+        }
+    }
+}
+
+int main() {
+    int data[] = {23, 12, 1, 8, 34, 54, 2, 3};
+    int size = sizeof(data) / sizeof(data[0]);
+    
+    cout << "Исходный массив: ";
+    for (int i = 0; i < size; i++) cout << data[i] << " ";
+    cout << endl;
+    
+    shellSort(data, size);
+    
+    cout << "Отсортированный массив: ";
+    for (int i = 0; i < size; i++) cout << data[i] << " ";
+    
+    return 0;
+}
+
+
+Исходный массив: 23 12 1 8 34 54 2 3 
+Отсортированный массив: 1 2 3 8 12 23 34 54
